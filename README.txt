@@ -32,6 +32,3 @@
   and then copy the new path from the directory into the source code.
 
 - Additionally change any instances of the above directory path to the new path.
-  > Line 26 in the Inventory class
-  > Line 271 in the Inventory class
-  > Line 515 in the Inventory class
