@@ -14,6 +14,8 @@ namespace SauceDemoTestAutomation
         public IWebDriver cdriver;
         public ExtentReports extent = null;
         public IWebElement visible;
+        
+
 
         [OneTimeSetUp]
         public void Initialize()
@@ -50,8 +52,6 @@ namespace SauceDemoTestAutomation
                 test = extent.CreateTest("Add Backpack to Cart as a Standard User").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-backpack")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
@@ -61,12 +61,17 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {
                     test.Log(AventStack.ExtentReports.Status.Info, "Backpack added to cart");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
                 }
 
                 cdriver.FindElement(By.Id("remove-sauce-labs-backpack")).Click();
-                test.Log(AventStack.ExtentReports.Status.Info, "Backpack removed from cart ");
 
-                test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                try { bool isElementDisplayed = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Displayed; }
+                catch (NoSuchElementException n)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Backpack removed from cart ");
+                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                }
             }
             catch (Exception e)
             {
@@ -77,26 +82,120 @@ namespace SauceDemoTestAutomation
         }
 
         [Test]
-        //Test Scenario: Sort produxta from high to low prices with the "standard_user" account
+        //Test Scenario: Go to the correct About page with the "standard_user" account
+        public void ViewAboutPage_SU()
+        {
+            ExtentTest test = null;
+            String currentURL = null;
+            try
+            {
+                test = extent.CreateTest("View About Page as a Standard User").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+
+                currentURL = cdriver.Url;
+
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                // Open the navigation side pane to access the logout link
+                cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
+                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                cdriver.FindElement(By.Id("about_sidebar_link")).Click();
+                test.Log(AventStack.ExtentReports.Status.Info, "Standard user clicked ABOUT from side navigation pane");
+
+                currentURL = cdriver.Url;
+                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                if (currentURL == "https://saucelabs.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                }
+                else
+                {
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Link is Broken");
+                }
+
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Unable to access About Page");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
+
+        }
+
+
+        [Test]
+        //Test Scenario: Reset the Application State with the "standard_user" account
+        public void ResetAppState_SU()
+        {
+            ExtentTest test = null;
+            String currentURL = null;
+            try
+            {
+                test = extent.CreateTest("Reset App State as a Standard User").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+
+                currentURL = cdriver.Url;
+
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                cdriver.FindElement(By.Id("add-to-cart-sauce-labs-onesie")).Click();
+
+                //The number displayed in above the shopping cart icon when an item is added
+                String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
+
+                //Check if the shopping cart badge number is empty 
+                if (cartNo != null)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
+                    test.Log(AventStack.ExtentReports.Status.Info, "Onesie added to cart");
+                }
+
+                // Open the navigation side pane to access the logout link
+                cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
+                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                cdriver.FindElement(By.Id("reset_sidebar_link")).Click();
+                test.Log(AventStack.ExtentReports.Status.Info, "Standard user clicked RESET APP STATE from side navigation pane");
+
+
+                try { bool isElementDisplayed = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Displayed; }
+                catch(NoSuchElementException n)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Shopping Cart is empty");
+                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                }
+
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
+
+        }
+
+        [Test]
+        //Test Scenario: Sort products from high to low prices as a Standard User account
         public void Sort_HiLo_SU()
         {
             ExtentTest test = null;
+            WebDriverWait wait = new WebDriverWait(cdriver, TimeSpan.FromSeconds(10));
 
             try
             {
                 test = extent.CreateTest("Sort from High to Low as a Standard User").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 var sortProducts = cdriver.FindElement(By.ClassName("product_sort_container"));
                 var selectOption = new SelectElement(sortProducts);
                 
                 // select by value
                 selectOption.SelectByValue("hilo");
+
                 test.Log(AventStack.ExtentReports.Status.Info, "Products Sorted from high to low price ");
                 
-
                 test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 
             }
@@ -129,8 +228,10 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {
                     test.Log(AventStack.ExtentReports.Status.Info, "Bike Light added to cart");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
                     test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 }
+
             }
             catch (Exception e)
             {
@@ -160,6 +261,7 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {
                     test.Log(AventStack.ExtentReports.Status.Info, "Bolt Shirt added to cart");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
                     test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 }
             }
@@ -193,6 +295,7 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Fleece Jacket added to cart");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
                     test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 }
             }
@@ -225,6 +328,7 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {
                     test.Log(AventStack.ExtentReports.Status.Info, "Onesie added to cart");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
                     test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 }
             }
@@ -257,6 +361,7 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {
                     test.Log(AventStack.ExtentReports.Status.Info, "Red T-Shirt added to cart");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
                     test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 }
             }
@@ -308,48 +413,130 @@ namespace SauceDemoTestAutomation
         }
 
         [Test]
-        //Test Scenario: Successfully add backpack to cart with the "problem_user" account
-        public void AddBackpackToCart_PU()
+        //Test Scenario: Sort produxta from high to low prices with the "standard_user" account
+        public void Sort_ZtoA_PU()
         {
             ExtentTest test = null;
 
             try
             {
-                test = extent.CreateTest("Add Backpack to Cart as a Problem User").Info("Test Started");
+                test = extent.CreateTest("Sort from Z to A as a Problem User").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-                cdriver.FindElement(By.Id("add-to-cart-sauce-labs-backpack")).Click();
+                var sortProducts = cdriver.FindElement(By.ClassName("product_sort_container"));
+                var selectOption = new SelectElement(sortProducts);
 
-                //The number displayed in above the shopping cart icon when an item is added
-                String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).ToString();
+                // select by value
+                selectOption.SelectByValue("za");
+                String sortValueText = cdriver.FindElement(By.ClassName("product_sort_container")).Text;
+                test.Log(AventStack.ExtentReports.Status.Info, sortValueText);
 
-                //Check if the shopping cart badge number is empty 
-                if (cartNo != null)
-                {
-                    test.Log(AventStack.ExtentReports.Status.Info, "Backpack added to cart");
-                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
-                }
+                test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+
             }
             catch (Exception e)
             {
-                test.Log(AventStack.ExtentReports.Status.Info, "Backpack not added to cart");
+                test.Log(AventStack.ExtentReports.Status.Info, "Error when trying to sort products");
                 test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
             }
 
         }
 
-        //Test Scenario: Successfully add bikelight to cart with the "problem_user" account
         [Test]
-        public void AddBikeLightToCart_PU()
+        //Test Scenario: Click the saucelabs backpack label to view the item details
+        public void ViewBackpack_PU()
+        {
+            ExtentTest test = null;
+            String currentURL = null;
+            try
+            {
+                test = extent.CreateTest("View Backpack Page as a Problem User").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+
+                currentURL = cdriver.Url;
+
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                String itemName = cdriver.FindElement(By.LinkText("Sauce Labs Backpack")).Text;
+                cdriver.FindElement(By.LinkText("Sauce Labs Backpack")).Click();
+
+                test.Log(AventStack.ExtentReports.Status.Info, "User clicked: " + itemName);
+
+                String inventoryItem = cdriver.FindElement(By.ClassName("inventory_details_name")).Text;
+                test.Log(AventStack.ExtentReports.Status.Info, "Item Displayed: " + inventoryItem);
+
+                if (itemName != inventoryItem)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Items do not match");
+                }
+                else
+                {
+                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                }
+
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Unable to View Item");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
+
+        }
+
+        [Test]
+        //Test Scenario: Go to the correct About page as a Problem User 
+        public void ViewAboutPage_PU()
+        {
+            ExtentTest test = null;
+            String currentURL = null;
+            try
+            {
+                test = extent.CreateTest("View About Page as a Problem User").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+
+                currentURL = cdriver.Url;
+
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+               // Open the navigation side pane to access the logout link
+                cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
+                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                cdriver.FindElement(By.Id("about_sidebar_link")).Click();
+                test.Log(AventStack.ExtentReports.Status.Info, "Problem user clicked ABOUT from side navigation pane");
+
+                currentURL = cdriver.Url;
+                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                if (currentURL == "https://saucelabs.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                }
+                else
+                {
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Link is Broken");
+                }
+
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Unable to access About Page");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
+
+        }
+        //Test Scenario: Successfully add bikelight to cart with the "problem_user" account
+
+        [Test]
+        public void Add_RemoveBikeLight_PU()
         {
             ExtentTest test = null;
 
             try
             {
-                test = extent.CreateTest("Add Bike Light to Cart as a Problem User").Info("Test Started");
+                test = extent.CreateTest("Add and Remove Bike Light from Cart as a Problem User").Info("Test Started");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-bike-light")).Click();
 
@@ -360,12 +547,28 @@ namespace SauceDemoTestAutomation
                 if (cartNo != null)
                 {
                     test.Log(AventStack.ExtentReports.Status.Info, "Bike Light added to cart");
-                    test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    test.Log(AventStack.ExtentReports.Status.Info, "No. of Items in Cart: " + cartNo);
+
                 }
+
+                cdriver.FindElement(By.Id("remove-sauce-labs-bike-light")).Click();
+
+                try 
+                { 
+                    bool isElementDisplayed = cdriver.FindElement(By.ClassName("add-to-cart-sauce-labs-bike-light")).Displayed;
+                    if (isElementDisplayed == true)
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    }    
+                }
+                catch (NoSuchElementException n)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Unable to Remove Bike Light from cart");
+                }
+
             }
             catch (Exception e)
             {
-                test.Log(AventStack.ExtentReports.Status.Info, "Bike Light not added to cart");
                 test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
             }
         }
@@ -380,8 +583,6 @@ namespace SauceDemoTestAutomation
             {
                 test = extent.CreateTest("Add Bolt Shirt to Cart as a Problem User").Info("Test Started");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-bolt-t-shirt")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
@@ -393,6 +594,7 @@ namespace SauceDemoTestAutomation
                     test.Log(AventStack.ExtentReports.Status.Info, "Bolt Shirt added to cart");
                     test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
                 }
+
             }
             catch (Exception e)
             {
@@ -547,8 +749,6 @@ namespace SauceDemoTestAutomation
                 test = extent.CreateTest("Add Backpack to Cart as a Performance Glitch User").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-backpack")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
@@ -579,8 +779,6 @@ namespace SauceDemoTestAutomation
             { 
                 test = extent.CreateTest("Add Bike Light to Cart as a Performance Glitch User").Info("Test Started");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-bike-light")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
@@ -609,8 +807,6 @@ namespace SauceDemoTestAutomation
             try
             {
                 test = extent.CreateTest("Add Bolt Shirt to Cart as a Performance Glitch User").Info("Test Started");
-
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-bolt-t-shirt")).Click();
 
@@ -642,8 +838,6 @@ namespace SauceDemoTestAutomation
             {
                 test = extent.CreateTest("Add Fleece Jacket to Cart as a Performance Glitch User").Info("Test Started");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-fleece-jacket")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
@@ -674,8 +868,6 @@ namespace SauceDemoTestAutomation
             {
                 test = extent.CreateTest("Add Onesie to Cart as a Performance Glitch User").Info("Test Started");
 
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-onesie")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
@@ -705,8 +897,6 @@ namespace SauceDemoTestAutomation
             try
             {
                 test = extent.CreateTest("Add red t shirt to Cart as a Performance Glitch User").Info("Test Started");
-
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 cdriver.FindElement(By.Id("add-to-cart-test.allthethings()-t-shirt-(red)")).Click();
 

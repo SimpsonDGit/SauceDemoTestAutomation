@@ -15,6 +15,8 @@ namespace SauceDemoTestAutomation.BaseClass
     {
         public IWebDriver cdriver;
         public ExtentReports extent = null;
+        public IWebElement userName = null;
+        public IWebElement password = null;
 
         [SetUp]
         public void Initialize()

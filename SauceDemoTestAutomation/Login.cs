@@ -7,35 +7,63 @@ using System;
 
 namespace SauceDemoTestAutomation
 {
+
     [TestFixture]
     public class LoginTests : BaseTest
     {
+        public String currentURL = null;
+
         //Test Scenario: Successfully login with the username "standard_user" and the default password "secret_sauce"
         [Test]
         public void StandardUserTest()
         {
             ExtentTest test = null;
 
-            test = extent.CreateTest("Standard User Login").Info("Test Started");
-            test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+            try
+            {
+                test = extent.CreateTest("Standard User Login").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-            //Find the username field on the login page and key the username above in the text box
-            IWebElement userName = cdriver.FindElement(By.Id("user-name"));
-            userName.SendKeys("standard_user");
-            
+                currentURL = cdriver.Url;
 
-            //Find the password field on the login page and key the password above in the text box
-            IWebElement password = cdriver.FindElement(By.Id("password"));
-            password.SendKeys("secret_sauce");
+                if (currentURL == "https://www.saucedemo.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-            //Find and click the login button
-            cdriver.FindElement(By.Name("login-button")).Click();
+                    //Find the username field on the login page and key the username above in the text box
+                    userName = cdriver.FindElement(By.Id("user-name"));
+                    userName.SendKeys("standard_user");
 
-            test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is standard_user");
-            test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
-            test.Log(AventStack.ExtentReports.Status.Info, "User Successfully Logged In");
-            test.Log(AventStack.ExtentReports.Status.Pass, "Standard User Login Passed");
-            
+
+                    //Find the password field on the login page and key the password above in the text box
+                    password = cdriver.FindElement(By.Id("password"));
+                    password.SendKeys("secret_sauce");
+
+                    //Find and click the login button
+                    cdriver.FindElement(By.Name("login-button")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                    currentURL = cdriver.Url;
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/inventory.html")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is standard_user");
+                        test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
+                        test.Log(AventStack.ExtentReports.Status.Info, "User Successfully Logged In");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Standard User Login Passed");
+                    }
+                    else
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Fail, "Standard user login attempt failed");
+                    }
+                }
+            } catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Standard user failed login attempt");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
+
         }
 
         //Test Scenario: Attempt to login with the username "locked_out_user" and the default password "secret_sauce"
@@ -44,21 +72,60 @@ namespace SauceDemoTestAutomation
         {
             ExtentTest test = null;
 
-            test = extent.CreateTest("LockedOut User Login").Info("Test Started");
-            test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+            try
+            {
+                test = extent.CreateTest("Locked Out User Login").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-            IWebElement userName = cdriver.FindElement(By.Id("user-name"));
-            userName.SendKeys("locked_out_user");
+                currentURL = cdriver.Url;
 
-            IWebElement password = cdriver.FindElement(By.Id("password"));
-            password.SendKeys("secret_sauce");
+                if (currentURL == "https://www.saucedemo.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL is: " + currentURL);
 
-            cdriver.FindElement(By.Name("login-button")).Click();
+                    //Find the username field on the login page and key the username above in the text box
+                    userName = cdriver.FindElement(By.Id("user-name"));
+                    userName.SendKeys("locked_out_user");
 
-            test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is locked_out_user");
-            test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
-            test.Log(AventStack.ExtentReports.Status.Info, "User denied login due to account being locked");
-            test.Log(AventStack.ExtentReports.Status.Pass, "LockedOut User Login Passed");
+
+                    //Find the password field on the login page and key the password above in the text box
+                    password = cdriver.FindElement(By.Id("password"));
+                    password.SendKeys("secret_sauce");
+
+                    //Find and click the login button
+                    cdriver.FindElement(By.Name("login-button")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+
+                    currentURL = cdriver.Url;
+
+                    if (currentURL != "https://www.saucedemo.com/inventory.html")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "Current URL after login attempt is: " + currentURL);
+
+                        String accountStatus = cdriver.FindElement(By.ClassName("error-message-container")).Text;
+
+                        if (accountStatus.Contains("locked out"))
+                        {
+                            test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is locked_out_user");
+                            test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
+                            test.Log(AventStack.ExtentReports.Status.Info, "Error message: " + accountStatus);
+                            test.Log(AventStack.ExtentReports.Status.Pass, "Locked Out User Denied Entry");
+                            currentURL = cdriver.Url;
+                        }
+                    }
+                    else if (currentURL == "https://www.saucedemo.com/inventory.html")
+                    {
+                        
+                        test.Log(AventStack.ExtentReports.Status.Info, "Locked account successfully Logged In");
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Locked Out user failed login attempt");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
         }
 
         //Test Scenario: Successfully login with the username "problem_user" and the default password "secret_sauce"
@@ -67,67 +134,158 @@ namespace SauceDemoTestAutomation
         {
             ExtentTest test = null;
 
-            test = extent.CreateTest("Problem User Login").Info("Test Started");
-            test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+            try
+            {
+                test = extent.CreateTest("Problem User Account Login").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-            IWebElement userName = cdriver.FindElement(By.Id("user-name"));
-            userName.SendKeys("problem_user");
+                currentURL = cdriver.Url;
 
-            IWebElement password = cdriver.FindElement(By.Id("password"));
-            password.SendKeys("secret_sauce");
+                if (currentURL == "https://www.saucedemo.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-            cdriver.FindElement(By.Name("login-button")).Click();
+                    //Find the username field on the login page and key the username above in the text box
+                    userName = cdriver.FindElement(By.Id("user-name"));
+                    userName.SendKeys("problem_user");
 
-            test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is problem_user");
-            test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
-            test.Log(AventStack.ExtentReports.Status.Info, "User Successfully Logged In");
-            test.Log(AventStack.ExtentReports.Status.Pass, "Problem User Login Passed");
+
+                    //Find the password field on the login page and key the password above in the text box
+                    password = cdriver.FindElement(By.Id("password"));
+                    password.SendKeys("secret_sauce");
+
+                    //Find and click the login button
+                    cdriver.FindElement(By.Name("login-button")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+                    currentURL = cdriver.Url;
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/inventory.html")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is problem_user");
+                        test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
+                        test.Log(AventStack.ExtentReports.Status.Info, "Problem User Successfully Logged In");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Problem User Login Passed");
+                    }
+                    else
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Fail, "Problem User login attempt failed");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Problem user failed login attempt");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
         }
 
-        //Test Scenario: Successfully login with the username "performance_glitch_user" and the default password "secret_sauce"
+         //Test Scenario: Successfully login with the username "performance_glitch_user" and the default password "secret_sauce"
         [Test]
         public void PerformanceGlitchUserTest()
         {
             ExtentTest test = null;
 
-            test = extent.CreateTest("Performance Glitch User Login").Info("Test Started");
-            test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+            try
+            {
+                test = extent.CreateTest("Peformance Glitch User Account Login").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-            IWebElement userName = cdriver.FindElement(By.Id("user-name"));
-            userName.SendKeys("performance_glitch_user");
+                String currentURL = cdriver.Url;
 
-            IWebElement password = cdriver.FindElement(By.Id("password"));
-            password.SendKeys("secret_sauce");
+                if (currentURL == "https://www.saucedemo.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-            cdriver.FindElement(By.Name("login-button")).Click();
+                    //Find the username field on the login page and key the username above in the text box
+                    userName = cdriver.FindElement(By.Id("user-name"));
+                    userName.SendKeys("performance_glitch_user");
 
-            test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is performance_glitch_user");
-            test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
-            test.Log(AventStack.ExtentReports.Status.Info, "User Successfully Logged In");
-            test.Log(AventStack.ExtentReports.Status.Pass, "Performance Glitch User Login Passed");
+
+                    //Find the password field on the login page and key the password above in the text box
+                    password = cdriver.FindElement(By.Id("password"));
+                    password.SendKeys("secret_sauce");
+
+                    //Find and click the login button
+                    cdriver.FindElement(By.Name("login-button")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+                    currentURL = cdriver.Url;
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/inventory.html")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is performance_glitch_user");
+                        test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
+                        test.Log(AventStack.ExtentReports.Status.Info, "Peformance Glitch User Successfully Logged In");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Peformance Glitch User Login Passed");
+                    }
+                    else
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Fail, "Peformance Glitch User login attempt failed");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "Peformance Glitch User failed login attempt");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
         }
 
         //Test Scenario: Fail to login by entering a non authorzed username and the default password "secret_sauce"
         [Test]
-        public void UnauthorizedUser()
+        public void UnauthorizedUserTest()
         {
             ExtentTest test = null;
 
-            test = extent.CreateTest("Unathoried User Attempted Login").Info("Test Started");
-            test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
+            try
+            {
+                test = extent.CreateTest("Unauthorized User Login").Info("Test Started");
+                test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-            IWebElement userName = cdriver.FindElement(By.Id("user-name"));
-            userName.SendKeys("wronguser");
+                String currentURL = cdriver.Url;
 
-            IWebElement password = cdriver.FindElement(By.Id("password"));
-            password.SendKeys("secret_sauce");
+                if (currentURL == "https://www.saucedemo.com/")
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-            cdriver.FindElement(By.Name("login-button")).Click();
+                    //Find the username field on the login page and key the username above in the text box
+                    userName = cdriver.FindElement(By.Id("user-name"));
+                    userName.SendKeys("wrong_user");
 
-            test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is not accepted by the system");
-            test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
-            test.Log(AventStack.ExtentReports.Status.Info, "User was not permitted access to the site.");
-            test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+
+                    //Find the password field on the login page and key the password above in the text box
+                    password = cdriver.FindElement(By.Id("password"));
+                    password.SendKeys("secret_sauce");
+
+                    //Find and click the login button
+                    cdriver.FindElement(By.Name("login-button")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+
+                    currentURL = cdriver.Url;
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/inventory.html")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "User Name entered is wrong_user");
+                        test.Log(AventStack.ExtentReports.Status.Info, "Default Password entered");
+                        test.Log(AventStack.ExtentReports.Status.Info, "User Successfully Logged In");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Standard User Login Passed");
+                    }
+                    else
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Fail, "User login attempt failed");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                test.Log(AventStack.ExtentReports.Status.Info, "User failed login attempt");
+                test.Log(AventStack.ExtentReports.Status.Fail, e.ToString());
+            }
+
         }
     }
 }

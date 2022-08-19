@@ -51,23 +51,21 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click(); 
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-                    test.Log(AventStack.ExtentReports.Status.Info, "Backpack added to cart Successfuly");
+                    
+                    test.Log(AventStack.ExtentReports.Status.Info, "Backpack added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -97,23 +95,22 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Bike Light added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Bike Light added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -142,23 +139,22 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
+                
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Bolt Shirt added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Bolt Shirt added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -188,23 +184,22 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
+                
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Fleece Jacket added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Fleece Jacket added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -234,23 +229,23 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Onesi added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Onesi added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -280,23 +275,21 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-                    test.Log(AventStack.ExtentReports.Status.Info, "Red T-shirt added to cart Successfuly");
+                    
+                    test.Log(AventStack.ExtentReports.Status.Info, "Red T-shirt added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -315,109 +308,6 @@ namespace SauceDemoTestAutomation
         [OneTimeTearDown]
         public void CloseSite()
         {
-            cdriver.Quit();
-            extent.Flush();
-        }
-
-    }
-
-    [TestFixture]
-    public class CartCheckout_PU
-    {
-        public IWebDriver cdriver;
-        public ExtentReports extent = null;
-
-        [OneTimeSetUp]
-        public void Initialize()
-        {
-            cdriver = new ChromeDriver();
-            cdriver.Manage().Window.Maximize();
-            cdriver.Url = "https://www.saucedemo.com/";
-
-            //Create instance of extent report and direct the path to desired folder
-            extent = new ExtentReports();
-            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\Donovans\SauceDemoTestAutomation\SauceDemoTestAutomation\HtmlReports\ReportLog.html");
-            extent.AttachReporter(htmlReporter);
-
-            //Find the username field on the login page and key the username above in the text box
-            IWebElement userName = cdriver.FindElement(By.Id("user-name"));
-            userName.SendKeys("problem_user");
-
-            //Find the password field on the login page and key the password above in the text box
-            IWebElement password = cdriver.FindElement(By.Id("password"));
-            password.SendKeys("secret_sauce");
-
-            //Find and click the login button
-            cdriver.FindElement(By.Name("login-button")).Click();
-        }
-        //Test Scenario: Successfully add bike light to cart and checkout with the "standard_user" account
-        [Test]
-        public void AddBackpackToCart_PU()
-        {
-
-            cdriver.FindElement(By.Id("add-to-cart-sauce-labs-backpack")).Click();
-
-            cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-        }
-
-        //Test Scenario: Successfully add bike light to cart and checkout with the "standard_user" account
-        [Test]
-        public void AddBikeLightToCart_PU()
-        {
-
-
-            cdriver.FindElement(By.Id("add-to-cart-sauce-labs-bike-light")).Click();
-
-            cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-        }
-
-        //Test Scenario: Successfully add bike light to cart and checkout with the "standard_user" account
-        [Test]
-        public void AddBoltShirtToCart_PU()
-        {
-
-
-            cdriver.FindElement(By.Id("add-to-cart-sauce-labs-bolt-t-shirt")).Click();
-
-            cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-        }
-
-        //Test Scenario: Successfully add bike light to cart and checkout with the "standard_user" account
-        [Test]
-        public void AddFleeceJacketToCart_PU()
-        {
-
-
-            cdriver.FindElement(By.Id("add-to-cart-sauce-labs-fleece-jacket")).Click();
-
-            cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-        }
-
-        //Test Scenario: Successfully add bike light to cart and checkout with the "standard_user" account
-        [Test]
-        public void AddOnesieToCart_PU()
-        {
-
-            cdriver.FindElement(By.Id("add-to-cart-sauce-labs-onesie")).Click();
-
-            cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-        }
-
-        //Test Scenario: Successfully add bike light to cart and checkout with the "standard_user" account
-        [Test]
-        public void AddRedTShirtToCart_PU()
-        {
-            cdriver.FindElement(By.Id("add-to-cart-test.allthethings()-t-shirt-(red)")).Click();
-
-            cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-        }
-
-        [OneTimeTearDown]
-        public void CloseSite()
-        {
-
-            cdriver.FindElement(By.Name("checkout")).Click();
             cdriver.Quit();
             extent.Flush();
         }
@@ -468,24 +358,22 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-                    test.Log(AventStack.ExtentReports.Status.Info, "Backpack added to cart Successfuly");
+                    
+                    test.Log(AventStack.ExtentReports.Status.Info, "Backpack added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
+                    
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
 
@@ -514,21 +402,18 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Bike Light added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Bike Light added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
+                    
                     cdriver.FindElement(By.Id("cancel")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
 
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
@@ -556,23 +441,21 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-                    test.Log(AventStack.ExtentReports.Status.Info, "Bolt Shirt added to cart Successfuly");
+                    
+                    test.Log(AventStack.ExtentReports.Status.Info, "Bolt Shirt added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -601,24 +484,21 @@ namespace SauceDemoTestAutomation
                 cdriver.FindElement(By.Id("add-to-cart-sauce-labs-fleece-jacket")).Click();
 
                 //The number displayed in above the shopping cart icon when an item is added
-                String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text; 
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Fleece Jacket added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Fleece Jacket added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
@@ -648,24 +528,21 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Onesi added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Onesi added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
+                    
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");
 
@@ -694,23 +571,21 @@ namespace SauceDemoTestAutomation
 
                 //The number displayed in above the shopping cart icon when an item is added
                 String cartNo = cdriver.FindElement(By.ClassName("shopping_cart_badge")).Text;
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
                 //Check if the shopping cart badge number is empty 
                 if (cartNo != null)
                 {
                     cdriver.FindElement(By.ClassName("shopping_cart_link")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
-                    test.Log(AventStack.ExtentReports.Status.Info, "Red T-shirt added to cart Successfuly");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Red T-shirt added to cart ");
 
                     cdriver.FindElement(By.Name("checkout")).Click();
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
                     test.Log(AventStack.ExtentReports.Status.Info, "Successfully able to navigate from cart to checkout");
 
                     cdriver.FindElement(By.Id("cancel")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Cancel checkout and returned to cart page");
-                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    
 
                     cdriver.FindElement(By.Name("continue-shopping")).Click();
                     test.Log(AventStack.ExtentReports.Status.Info, "Continue shopping and return to inventory page");

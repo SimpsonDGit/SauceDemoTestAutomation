@@ -12,6 +12,9 @@ namespace SauceDemoTestAutomation
     [TestFixture]
     public class LogoutTests : BaseTest
     {
+        public String currentURL = null;
+        public String inventoryPage = "https://www.saucedemo.com/inventory.html";
+
         [Test]
         //Test Scenario: Successfully logout from the "standard_user" account
         public void StandardUserLogout()
@@ -22,28 +25,48 @@ namespace SauceDemoTestAutomation
                 test = extent.CreateTest("Standard User Logout").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
+                currentURL = cdriver.Url;
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
                 //Find the username field on the login page and key the username above in the text box
-                IWebElement userName = cdriver.FindElement(By.Id("user-name"));
+                userName = cdriver.FindElement(By.Id("user-name"));
                 userName.SendKeys("standard_user");
 
                 //Find the password field on the login page and key the password above in the text box
-                IWebElement password = cdriver.FindElement(By.Id("password"));
+                password = cdriver.FindElement(By.Id("password"));
                 password.SendKeys("secret_sauce");
 
                 //Find and click the login button
                 cdriver.FindElement(By.Name("login-button")).Click();
 
-                test.Log(AventStack.ExtentReports.Status.Info, "Standard user successfully logged in");
+                currentURL = cdriver.Url;
+                if (currentURL == inventoryPage)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Standard user successfully logged in");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-                //Open the navigation side pane to access the logout link
-                cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    //Open the navigation side pane to access the logout link
+                    cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-                cdriver.FindElement(By.Id("logout_sidebar_link")).Click();
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    cdriver.FindElement(By.Id("logout_sidebar_link")).Click();
+                    test.Log(AventStack.ExtentReports.Status.Info, "Standard user clicked LOGOUT from side navigation pane");
 
-                test.Log(AventStack.ExtentReports.Status.Info, "Standard user successfully logged out");
-                test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    currentURL = cdriver.Url;
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "Standard user successfully logged out");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    }
+                }
+                else
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Standard user not redirected");
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Test Failed");
+                }
             }
             catch (Exception e)
             {
@@ -63,23 +86,48 @@ namespace SauceDemoTestAutomation
                 test = extent.CreateTest("Problem User Logout").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-                IWebElement userName = cdriver.FindElement(By.Id("user-name"));
+                currentURL = cdriver.Url;
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                //Find the username field on the login page and key the username above in the text box
+                userName = cdriver.FindElement(By.Id("user-name"));
                 userName.SendKeys("problem_user");
 
-                IWebElement password = cdriver.FindElement(By.Id("password"));
+                //Find the password field on the login page and key the password above in the text box
+                password = cdriver.FindElement(By.Id("password"));
                 password.SendKeys("secret_sauce");
 
+                //Find and click the login button
                 cdriver.FindElement(By.Name("login-button")).Click();
-                test.Log(AventStack.ExtentReports.Status.Info, "Problem user successfully logged in");
 
-                cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                currentURL = cdriver.Url;
+                if (currentURL == inventoryPage)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Problem user successfully logged in");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-                cdriver.FindElement(By.Id("logout_sidebar_link")).Click();
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    //Open the navigation side pane to access the logout link
+                    cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-                test.Log(AventStack.ExtentReports.Status.Info, "Problem user successfully logged out");
-                test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    cdriver.FindElement(By.Id("logout_sidebar_link")).Click();
+                    test.Log(AventStack.ExtentReports.Status.Info, "Problem user clicked LOGOUT from side navigation pane");
+
+                    currentURL = cdriver.Url;
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "Problem user successfully logged out");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    }
+                }
+                else
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Problem user not redirected");
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Test Failed");
+                }
             }
             catch (Exception e)
             {
@@ -99,23 +147,48 @@ namespace SauceDemoTestAutomation
                 test = extent.CreateTest("Performance Glitch User Logout").Info("Test Started");
                 test.Log(AventStack.ExtentReports.Status.Info, "Chrome Browser Launched");
 
-                IWebElement userName = cdriver.FindElement(By.Id("user-name"));
+                currentURL = cdriver.Url;
+                test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                //Find the username field on the login page and key the username above in the text box
+                userName = cdriver.FindElement(By.Id("user-name"));
                 userName.SendKeys("performance_glitch_user");
 
-                IWebElement password = cdriver.FindElement(By.Id("password"));
+                //Find the password field on the login page and key the password above in the text box
+                password = cdriver.FindElement(By.Id("password"));
                 password.SendKeys("secret_sauce");
 
+                //Find and click the login button
                 cdriver.FindElement(By.Name("login-button")).Click();
-                test.Log(AventStack.ExtentReports.Status.Info, "Performance Glitch user successfully logged in");
 
-                cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                currentURL = cdriver.Url;
+                if (currentURL == inventoryPage)
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Performance Glitch user successfully logged in");
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
 
-                cdriver.FindElement(By.Id("logout_sidebar_link")).Click();
-                cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                    //Open the navigation side pane to access the logout link
+                    cdriver.FindElement(By.Id("react-burger-menu-btn")).Click();
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-                test.Log(AventStack.ExtentReports.Status.Info, "Performance Glitch user successfully logged out");
-                test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    cdriver.FindElement(By.Id("logout_sidebar_link")).Click();
+                    test.Log(AventStack.ExtentReports.Status.Info, "Performance Glitch user clicked LOGOUT from side navigation pane");
+
+                    currentURL = cdriver.Url;
+                    cdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                    test.Log(AventStack.ExtentReports.Status.Info, "Current URL: " + currentURL);
+
+                    if (currentURL == "https://www.saucedemo.com/")
+                    {
+                        test.Log(AventStack.ExtentReports.Status.Info, "Performance Glitch user successfully logged out");
+                        test.Log(AventStack.ExtentReports.Status.Pass, "Test Passed");
+                    }
+                }
+                else
+                {
+                    test.Log(AventStack.ExtentReports.Status.Info, "Performance Glitch user not redirected");
+                    test.Log(AventStack.ExtentReports.Status.Fail, "Test Failed");
+                }
             }
             catch (Exception e)
             {
