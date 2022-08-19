@@ -1,7 +1,5 @@
 { Sauce Demo Test Automation }
 
-- Clone the repository from
-
 - Open the "SauceDemoTestAutomation" solution file (.sln)
 
 - This Automation project uses Google Chrome as it's main web browser and 
